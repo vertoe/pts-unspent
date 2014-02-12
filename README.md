@@ -34,8 +34,12 @@ preparation & usage
 
 3. run the first script to fill your mysql database with unspent outputs
 
+```bash
     $ php update-database.php
+```
 
 4. run the second script to create json api with unspent outputs
 
+```bash
     $ php update-jsonapi.php > path/to/pts-unspent.json
+```
