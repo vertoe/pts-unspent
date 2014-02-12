@@ -50,7 +50,7 @@
   $r->close();
 
   echo "{\"blocknum\":".$blocknum.",\"blocktime\":0,\"moneysupply\":".$moneysupply.",\"balances\":\n";
-  echo "    {";
+  echo "    {\n";
 
   $r=$mysqli->query("select * from outputs group by address order by balance desc", MYSQLI_USE_RESULT);
 
@@ -58,7 +58,7 @@
     echo "        \"".$w['address']."\":".$w['balance'].",\n";
   }
 
-  echo "    }";
+  echo "    }\n";
   echo "}";
 
   $r->close();
