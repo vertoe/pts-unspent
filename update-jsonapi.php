@@ -26,11 +26,21 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+  // Get this from: http://jsonrpcphp.org/
+  require_once "jsonRPCClient.php";
+
   // Enter DB details, make sure the database 'pts_balance' exists
   $dbhost='localhost';
   $dbuser='root';
   $dbpass='dbpass';
   $database='pts_balances';
+
+  // Enter protoshares rpc details, make sure to set rpcuser, rpcpassword,
+  // rpcport, rpcallowip and txindex=1 in your protoshares.conf
+  $rpchost='localhost';
+  $rpcuser='protosharesrpc';
+  $rpcpass='superdupersecretphrase';
+  $rpcport='3838';
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -49,7 +59,12 @@
   $moneysupply=$w["sum(balance)"]+0;
   $r->close();
 
-  echo "{\"blocknum\":".$blocknum.",\"blocktime\":0,\"moneysupply\":".$moneysupply.",\"balances\":\n";
+  $pts=new jsonRPCClient("http://".$rpcuser.":".$rpcpass."@".$rpchost.":".$rpcport);
+  $blockhash=$pts->getblockhash($blocknum);
+  $blockinfo=$pts->getblock($blockhash);
+  $blocktime=$blockinfo['time'];
+
+  echo "{\"blocknum\":".$blocknum.",\"blocktime\":".$blocktime.",\"moneysupply\":".$moneysupply.",\"balances\":\n";
   echo "    {\n";
 
   $r=$mysqli->query("select * from outputs group by address order by balance desc", MYSQLI_USE_RESULT);
