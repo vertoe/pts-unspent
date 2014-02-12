@@ -1,0 +1,5 @@
+rpcuser=protosharesrpc
+rpcpassword=superdupersecretphrase
+txindex=1
+rpcport=3838
+rpcallowip=127.0.0.1
